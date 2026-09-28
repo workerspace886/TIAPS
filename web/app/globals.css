@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/*
+  Design tokens: "Alabaster & Aged Brass" editorial language
+  (TIAPS Phase 9, Response to Proposed Visual Design, 27 Sep 2026).
+*/
+@theme {
+  --color-bone: #F7F6F0;         /* Core background (Alabaster / Bone) */
+  --color-surface: #FFFFFF;      /* Surface cards (Deep Oyster White) */
+  --color-ink: #141412;          /* Typography ink (Rich Espresso) */
+  --color-taupe: #78766D;        /* Secondary text (Warm Taupe) */
+  --color-forest: #162B22;       /* Primary accent: high-impact buttons, headers */
+  --color-forest-hover: #0E1C16;
+  --color-brass: #A38A52;        /* Subtle borders, badges, dot indicators */
+  --color-line: #EAE7DF;         /* Grid dividers */
+
+  --shadow-soft: 0 8px 30px rgb(0 0 0 / 0.02);
+
+  /* Fluid type scale: shrinks with the viewport so the editorial balance holds on mobile. */
+  --text-display: clamp(2.75rem, 1.5rem + 4.8vw, 5.25rem);
+  --text-display--line-height: 1.02;
+  --text-headline: clamp(2.5rem, 1.7rem + 3.2vw, 4.25rem);
+  --text-headline--line-height: 1.05;
+  --text-title: clamp(1.875rem, 1.5rem + 1.4vw, 2.625rem);
+  --text-title--line-height: 1.1;
+}
+
+/* Font families come from next/font variables set on <html> in app/layout.tsx. */
+@theme inline {
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-bone font-sans text-ink antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-serif;
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-7xl px-5 md:px-10 xl:px-16; }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[.16em]; }
+  /* Monospaced section tag: "01 // SIGNAL" */
+  .tag { @apply font-mono text-[11px] uppercase tracking-[.12em] text-taupe; }
+
+  .card { @apply block rounded-2xl border border-line bg-surface shadow-soft; }
+  .card-link { @apply transition duration-300 hover:-translate-y-0.5 hover:border-brass; }
+  /* Editorial feature module: bone ground, fine border, brass/forest on hover. */
+  .module { @apply block rounded-2xl border border-line bg-bone transition-colors duration-300 hover:border-brass; }
+
+  .btn { @apply inline-flex min-h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 text-sm font-semibold transition-colors; }
+  .btn-primary { @apply bg-forest text-bone hover:bg-forest-hover; }
+  .btn-secondary { @apply border border-line bg-surface text-ink hover:border-brass; }
+  .btn-inverse { @apply bg-bone text-forest hover:bg-surface; }
+  .text-link { @apply inline-flex min-h-12 items-center text-[13px] font-semibold text-forest underline-offset-4 hover:underline; }
+
+  .badge { @apply inline-flex items-center rounded-full border border-brass/50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[.1em] text-ink; }
+  .ph { @apply inline-flex rounded border border-dashed border-brass/60 bg-surface/90 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-taupe; }
+
+  .input { @apply min-h-12 w-full rounded-xl border border-line bg-bone px-4 text-sm placeholder:text-taupe/80 focus:border-forest focus:bg-surface focus:ring-2 focus:ring-forest/10 focus:outline-none; }
+  textarea.input { @apply py-3; }
+
+  .filter { @apply inline-flex min-h-12 items-center whitespace-nowrap rounded-full border border-line bg-surface px-5 text-[13px] font-semibold text-taupe hover:text-ink md:min-h-10; }
+  .filter[aria-pressed="true"] { @apply border-forest bg-forest text-bone; }
+
+  .prose-body h2 { @apply mt-12 mb-3 text-title font-medium; }
+  .prose-body p { @apply mt-4 text-[17px] leading-[1.8]; }
+}
